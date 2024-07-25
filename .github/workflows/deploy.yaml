@@ -40,6 +40,7 @@ jobs:
             echo "${{ secrets.ENV }}" > .env
             docker compose down --rmi all
             docker compose up --build -d
+            docker compose logs
 
       - name: EC2 Security Group에 추가 했던 Github Actions IP 제거
         if: ${{ always() }}
