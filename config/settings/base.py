@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+THIRD_PARTY_APPS = [
+    'rest_framework',
+]
+
+PROJECT_APPS = []
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'djangorestframework_camel_case.middleware.CamelCaseMiddleWare',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -124,3 +133,23 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+        'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'djangorestframework_camel_case.parser.CamelCaseFormParser',
+        'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
+        'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+    ),
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/h',
+        'user': '300/h'
+    }
+}
