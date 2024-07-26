@@ -5,6 +5,7 @@ ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update
 RUN apt-get install -y python3-dev libpq-dev gcc
+RUN pip install psycopg2
 
 WORKDIR /app
 
