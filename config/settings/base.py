@@ -51,6 +51,7 @@ PROJECT_APPS = [
     'brands',
     'celebrities',
     'outfit_posts',
+    'scraps',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
