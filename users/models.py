@@ -12,8 +12,8 @@ class CustomUser(AbstractUser):
       (FEMALE, "여성"),
     )
 
-    outfit_post_scraps = models.ManyToManyField("outfit_posts.OutfitPost", through="scraps.OutfitPostScrap")
-    outfit_item_scraps = models.ManyToManyField("outfit_posts.OutfitItem", through="scraps.OutfitItemScrap")
+    outfit_post_scraps = models.ManyToManyField("outfit_posts.OutfitPost", through="scraps.OutfitPostScrap", related_name="users")
+    outfit_item_scraps = models.ManyToManyField("outfit_posts.OutfitItem", through="scraps.OutfitItemScrap", related_name="users")
     email = models.EmailField(unique=True)
     nickname = models.CharField(max_length=6)
     gender = models.CharField(

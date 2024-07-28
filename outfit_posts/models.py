@@ -11,8 +11,8 @@ class OutfitPost(models.Model):
 	)
 
 	items = models.ManyToManyField("outfit_posts.OutfitItem")
-	celebrity_id = models.ForeignKey("celebrities.Celebrity", on_delete=models.CASCADE)
-	created_by = models.ForeignKey("users.CustomUser", on_delete=models.SET_NULL, null=True)
+	celebrity_id = models.ForeignKey("celebrities.Celebrity", related_name="outfit_posts", on_delete=models.CASCADE)
+	created_by = models.ForeignKey("users.CustomUser", related_name="outfit_posts", on_delete=models.SET_NULL, null=True)
 	title = models.CharField(max_length=20)
 	created_at = models.DateTimeField(auto_now_add=True)
 	gender = models.CharField(
@@ -43,7 +43,7 @@ class OutfitItem(models.Model):
 		(OTHERS, "기타"),
 	)
 
-	brand_id = models.ForeignKey("brands.Brand", on_delete=models.CASCADE)
+	brand_id = models.ForeignKey("brands.Brand", related_name="outfit_items", on_delete=models.CASCADE)
 	category = models.CharField(
 		max_length=10,
 		choices=CATEGORY_CHOICES,
