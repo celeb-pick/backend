@@ -20,8 +20,30 @@ class OutfitPost(models.Model):
 	)
 	image_url = models.CharField(max_length=300)
 
-# class OutfitItem(models.Model):
-# 	pass
+class OutfitItem(models.Model):
+	IDOL = "IDOL"
+	MODEL = "MODEL"
+	SINGER = "SINGER"
+	ACTOR = "ACTOR"
+	INFLUENCER = "INFLUENCER"
+	OTHERS = "OTHERS"
+	CATEGORY_CHOICES = (
+		(IDOL, "아이돌"),
+		(MODEL, "모델"),
+		(SINGER, "가수"),
+		(ACTOR, "배우"),
+		(INFLUENCER, "인플루언서"),
+		(OTHERS, "기타"),
+	)
+
+	brand_id = models.ForeignKey("brands.Brand", on_delete=models.CASCADE)
+	category = models.CharField(
+		max_length=10,
+		choices=CATEGORY_CHOICES,
+	)
+	name = models.CharField(max_length=60)
+	purchase_link = models.CharField(max_length=300, blank=True)
+	image_url = models.CharField(max_length=300)
 
 # class OutfitPostItem(models.Model):
 # 	pass
