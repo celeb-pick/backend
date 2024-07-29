@@ -1,9 +1,9 @@
 from django.db import models
 
 class OutfitPost(models.Model):
-	MALE = "MALE"
-	FEMALE = "FEMALE"
-	UNISEX = "UNISEX"
+	MALE = "남성"
+	FEMALE = "여성"
+	UNISEX = "공용"
 	GENDER_CHOICES = (
 		(MALE, "남성"),
 		(FEMALE, "여성"),
