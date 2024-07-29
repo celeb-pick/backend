@@ -1,12 +1,12 @@
 from django.db import models
 
 class Celebrity(models.Model):
-    IDOL = "IDOL"
-    MODEL = "MODEL"
-    SINGER = "SINGER"
-    ACTOR = "ACTOR"
-    INFLUENCER = "INFLUENCER"
-    OTHERS = "OTHERS"
+    IDOL = "아이돌"
+    MODEL = "모델"
+    SINGER = "가수"
+    ACTOR = "배우"
+    INFLUENCER = "인플루언서"
+    OTHERS = "기타"
     CATEGORY_CHOICES = (
 		(IDOL, "아이돌"),
 		(MODEL, "모델"),
