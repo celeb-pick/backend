@@ -28,18 +28,20 @@ class OutfitPost(models.Model):
 		return self.title
 
 class OutfitItem(models.Model):
-	IDOL = "IDOL"
-	MODEL = "MODEL"
-	SINGER = "SINGER"
-	ACTOR = "ACTOR"
-	INFLUENCER = "INFLUENCER"
+	TOP = "TOP"
+	BOTTOM = "BOTTOM"
+	OUTERWEAR = "OUTERWEAR"
+	SHOES = "SHOES"
+	BAG = "BAG"
+	ACCESSORY = "ACCESSORY"
 	OTHERS = "OTHERS"
 	CATEGORY_CHOICES = (
-		(IDOL, "아이돌"),
-		(MODEL, "모델"),
-		(SINGER, "가수"),
-		(ACTOR, "배우"),
-		(INFLUENCER, "인플루언서"),
+		(TOP, "상의"),
+		(BOTTOM, "하의"),
+		(OUTERWEAR, "아우터"),
+		(SHOES, "신발"),
+		(BAG, "가방"),
+		(ACCESSORY, "악세사리"),
 		(OTHERS, "기타"),
 	)
 
