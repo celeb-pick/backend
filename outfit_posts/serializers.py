@@ -36,6 +36,7 @@ class OutfitItemSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
         model = OutfitItem
         fields = [
             "id",
+            "name",
             "purchase_link",
             "image_url",
             *BaseOutfitSerializer.Meta.fields,
