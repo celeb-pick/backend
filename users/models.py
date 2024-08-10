@@ -1,12 +1,13 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.validators import MaxLengthValidator
 
 from .managers import CustomUserManager
 
 
 class CustomUser(AbstractUser):
-    MALE = "MALE"
-    FEMALE = "FEMALE"
+    MALE = "남성"
+    FEMALE = "여성"
     GENDER_CHOICES = (
       (MALE, "남성"),
       (FEMALE, "여성"),
@@ -14,8 +15,12 @@ class CustomUser(AbstractUser):
 
     outfit_post_scraps = models.ManyToManyField("outfit_posts.OutfitPost", through="scraps.OutfitPostScrap", related_name="users")
     outfit_item_scraps = models.ManyToManyField("outfit_posts.OutfitItem", through="scraps.OutfitItemScrap", related_name="users")
-    email = models.EmailField(unique=True)
-    nickname = models.CharField(max_length=6)
+    email = models.EmailField(unique=True, error_messages={'unique': "이미 존재하는 이메일 입니다."})
+    nickname = models.CharField(
+        max_length=6,
+        unique=True,
+        error_messages={"unique": "이미 존재하는 닉네임 입니다."},
+      )
     gender = models.CharField(
         max_length=10,
         choices=GENDER_CHOICES,

@@ -1,7 +1,10 @@
 from django.contrib.auth import authenticate, login as auth_login
 from rest_framework import status
+from rest_framework import mixins
+from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from .serializers import SignupSerializer
 
 
 @api_view(['POST'])
@@ -26,3 +29,10 @@ def login(request):
 
     auth_login(request, user)
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class Signup(mixins.CreateModelMixin, generics.GenericAPIView):
+    serializer_class = SignupSerializer
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
