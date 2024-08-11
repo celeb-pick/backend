@@ -9,9 +9,9 @@ from .serializers import SignupSerializer
 
 @api_view(['GET'])
 def auth_status(request):
-    is_login = request.user.is_authenticated
+    is_authenticated = request.user.is_authenticated
 
-    return Response({"is_login": is_login}, status=status.HTTP_200_OK)
+    return Response({"is_authenticated": is_authenticated}, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
