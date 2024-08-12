@@ -35,4 +35,12 @@ class Signup(mixins.CreateModelMixin, generics.GenericAPIView):
     serializer_class = SignupSerializer
 
     def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+        response = self.create(request, *args, **kwargs)
+
+        if response.status_code == status.HTTP_201_CREATED:
+            email = request.data.get("email")
+            password = request.data.get("password")
+            user = authenticate(request, email=email, password=password)
+            auth_login(request, user)
+
+        return response
