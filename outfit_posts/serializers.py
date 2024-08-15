@@ -24,7 +24,7 @@ class BaseOutfitSerializer(serializers.Serializer):
         if user.is_anonymous:
             return None
 
-        if not obj.scraps.filter(id=user.id):
+        if not obj.scraps.filter(user=user).exists():
             return False
 
         return True
