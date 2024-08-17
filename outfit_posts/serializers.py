@@ -61,3 +61,19 @@ class OutfitPostSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
             "creator",
             "items",
         ]
+
+
+class OutfitItemSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
+    brand = OutfitItemBrandSerializer()
+
+    class Meta:
+        model = OutfitItem
+        fields = [
+            "id",
+            "category",
+            "name",
+            "purchase_link",
+            "image_url",
+            *BaseOutfitSerializer.Meta.fields,
+            "brand",
+        ]
