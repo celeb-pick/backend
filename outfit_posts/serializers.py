@@ -29,7 +29,7 @@ class BaseOutfitSerializer(serializers.Serializer):
 
         return True
 
-class OutfitItemSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
+class TinyOutfitItemSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
     brand = OutfitItemBrandSerializer()
 
     class Meta:
@@ -46,7 +46,7 @@ class OutfitItemSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
 class OutfitPostSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
     celebrity = OutfitPostCelebritySerializer()
     creator = OutfitPostCreatorSerializer()
-    items = OutfitItemSerializer(many=True)
+    items = TinyOutfitItemSerializer(many=True)
 
     class Meta:
         model = OutfitPost
@@ -60,4 +60,20 @@ class OutfitPostSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
             "celebrity",
             "creator",
             "items",
+        ]
+
+
+class OutfitItemSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
+    brand = OutfitItemBrandSerializer()
+
+    class Meta:
+        model = OutfitItem
+        fields = [
+            "id",
+            "category",
+            "name",
+            "purchase_link",
+            "image_url",
+            *BaseOutfitSerializer.Meta.fields,
+            "brand",
         ]

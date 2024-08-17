@@ -21,5 +21,6 @@ urlpatterns = [
         path('', include('outfit_posts.urls')),
         path('', include('scraps.urls')),
         path('', include('auths.urls')),
+        path('', include('users.urls')),
     ]))
 ]
