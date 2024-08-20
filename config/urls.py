@@ -22,5 +22,6 @@ urlpatterns = [
         path('', include('scraps.urls')),
         path('', include('auths.urls')),
         path('', include('users.urls')),
+        path('', include('celebrities.urls')),
     ]))
 ]
