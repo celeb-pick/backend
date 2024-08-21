@@ -1,5 +1,14 @@
 from django.db import models
-from django.core.validators import MinLengthValidator
+from django.dispatch import receiver
+from django.core.validators import MinLengthValidator, FileExtensionValidator
+import uuid
+import os
+
+
+def generate_filename(value, filename):
+    extension = os.path.splitext(value.image.name)[1]
+    return f"outfit-post/{str(uuid.uuid4())}{extension}"
+
 
 class OutfitPost(models.Model):
 	MALE = "남성"
@@ -20,13 +29,30 @@ class OutfitPost(models.Model):
 		max_length=10,
 		choices=GENDER_CHOICES,
 	)
-	image_url = models.CharField(max_length=300)
+	image = models.ImageField(
+		upload_to=generate_filename,
+		validators=[FileExtensionValidator([
+			"jpg",
+			"jpeg",
+			"jfif",
+			"png",
+			"bmp",
+			"webp",
+			"tif",
+			"tiff",
+		])]
+	)
 
 	class Meta:
 		ordering = ["-created_at"]
 
 	def __str__(self):
 		return self.title
+
+
+@receiver(models.signals.pre_delete, sender=OutfitPost)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+		instance.image.delete()
 
 
 class OutfitPostItems(models.Model):
