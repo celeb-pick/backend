@@ -10,7 +10,7 @@ class OutfitPost(models.Model):
 		(UNISEX, "공용"),
 	)
 
-	items = models.ManyToManyField("outfit_posts.OutfitItem")
+	items = models.ManyToManyField("outfit_posts.OutfitItem", through="outfit_posts.OutfitPostItems")
 	celebrity = models.ForeignKey("celebrities.Celebrity", related_name="outfit_posts", on_delete=models.CASCADE)
 	creator = models.ForeignKey("users.CustomUser", related_name="outfit_posts", on_delete=models.SET_NULL, null=True)
 	title = models.CharField(max_length=20)
@@ -26,6 +26,12 @@ class OutfitPost(models.Model):
 
 	def __str__(self):
 		return self.title
+
+
+class OutfitPostItems(models.Model):
+    outfit_post = models.ForeignKey("outfit_posts.OutfitPost", on_delete=models.CASCADE)
+    outfit_item = models.ForeignKey("outfit_posts.OutfitItem", on_delete=models.CASCADE)
+
 
 class OutfitItem(models.Model):
 	TOP = "TOP"
