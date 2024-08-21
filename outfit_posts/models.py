@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinLengthValidator
 
 class OutfitPost(models.Model):
 	MALE = "남성"
@@ -13,7 +14,7 @@ class OutfitPost(models.Model):
 	items = models.ManyToManyField("outfit_posts.OutfitItem", through="outfit_posts.OutfitPostItems")
 	celebrity = models.ForeignKey("celebrities.Celebrity", related_name="outfit_posts", on_delete=models.CASCADE)
 	creator = models.ForeignKey("users.CustomUser", related_name="outfit_posts", on_delete=models.SET_NULL, null=True)
-	title = models.CharField(max_length=20)
+	title = models.CharField(max_length=20, validators=[MinLengthValidator(4)])
 	created_at = models.DateTimeField(auto_now_add=True)
 	gender = models.CharField(
 		max_length=10,
