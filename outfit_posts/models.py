@@ -18,7 +18,7 @@ class OutfitPost(models.Model):
 		(MALE, "남성"),
 		(FEMALE, "여성"),
 		(UNISEX, "공용"),
-	)
+	)	
 
 	items = models.ManyToManyField("outfit_posts.OutfitItem", through="outfit_posts.OutfitPostItems")
 	celebrity = models.ForeignKey("celebrities.Celebrity", related_name="outfit_posts", on_delete=models.CASCADE)

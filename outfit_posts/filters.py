@@ -18,3 +18,15 @@ def get_filtered_outfit_posts(queryset, query_params):
         queryset = queryset.filter(items__id=item_id)
     
     return queryset
+
+
+def get_filtered_outfit_items(queryset, query_params):
+    item_category = query_params.get("item_category")
+    if item_category:
+        queryset = queryset.filter(category=item_category)
+    
+    search = query_params.get("search")
+    if search:
+        queryset = queryset.filter(name__contains=search)
+    
+    return queryset
