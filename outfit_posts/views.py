@@ -8,7 +8,6 @@ from .filters import get_filtered_outfit_posts, get_filtered_outfit_items
 
 class OutfitPostList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     serializer_class = OutfitPostSerializer
-    parser_classes = [FormParser, MultiPartParser]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
