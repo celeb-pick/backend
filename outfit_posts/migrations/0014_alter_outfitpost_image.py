@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='outfitpost',
             name='image',
-            field=models.ImageField(upload_to=outfit_posts.models.generate_filename, validators=[django.core.validators.FileExtensionValidator(['jpg', 'jpeg', 'jfif', 'png', 'bmp', 'webp', 'tif', 'tiff'])]),
+            field=models.ImageField(upload_to=outfit_posts.models.generate_outfit_post_image_filename, validators=[django.core.validators.FileExtensionValidator(['jpg', 'jpeg', 'jfif', 'png', 'bmp', 'webp', 'tif', 'tiff'])]),
         ),
     ]

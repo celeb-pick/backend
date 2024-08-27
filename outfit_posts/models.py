@@ -5,7 +5,7 @@ import uuid
 import os
 
 
-def generate_filename(value, filename):
+def generate_outfit_post_image_filename(value, filename):
     extension = os.path.splitext(value.image.name)[1]
     return f"outfit-post/{str(uuid.uuid4())}{extension}"
 
@@ -30,7 +30,7 @@ class OutfitPost(models.Model):
 		choices=GENDER_CHOICES,
 	)
 	image = models.ImageField(
-		upload_to=generate_filename,
+		upload_to=generate_outfit_post_image_filename,
 		validators=[FileExtensionValidator([
 			"jpg",
 			"jpeg",
@@ -51,7 +51,7 @@ class OutfitPost(models.Model):
 
 
 @receiver(models.signals.pre_delete, sender=OutfitPost)
-def auto_delete_file_on_delete(sender, instance, **kwargs):
+def outfit_post_auto_delete_file_on_delete(sender, instance, **kwargs):
 		instance.image.delete()
 
 
@@ -60,14 +60,19 @@ class OutfitPostItems(models.Model):
     outfit_item = models.ForeignKey("outfit_posts.OutfitItem", on_delete=models.CASCADE)
 
 
+def generate_outfit_item_image_filename(value, filename):
+    extension = os.path.splitext(value.image.name)[1]
+    return f"outfit-item/{str(uuid.uuid4())}{extension}"
+
+
 class OutfitItem(models.Model):
-	TOP = "TOP"
-	BOTTOM = "BOTTOM"
-	OUTERWEAR = "OUTERWEAR"
-	SHOES = "SHOES"
-	BAG = "BAG"
-	ACCESSORY = "ACCESSORY"
-	OTHERS = "OTHERS"
+	TOP = "상의"
+	BOTTOM = "하의"
+	OUTERWEAR = "아우터"
+	SHOES = "신발"
+	BAG = "가방"
+	ACCESSORY = "악세사리"
+	OTHERS = "기타"
 	CATEGORY_CHOICES = (
 		(TOP, "상의"),
 		(BOTTOM, "하의"),
@@ -85,7 +90,19 @@ class OutfitItem(models.Model):
 	)
 	name = models.CharField(max_length=60)
 	purchase_link = models.CharField(max_length=300, blank=True)
-	image_url = models.CharField(max_length=300)
+	image = models.ImageField(
+		upload_to=generate_outfit_item_image_filename,
+		validators=[FileExtensionValidator([
+			"jpg",
+			"jpeg",
+			"jfif",
+			"png",
+			"bmp",
+			"webp",
+			"tif",
+			"tiff",
+		])]
+	)
 	created_at = models.DateTimeField(auto_now_add=True)
 
 	class Meta:
@@ -93,3 +110,8 @@ class OutfitItem(models.Model):
 
 	def __str__(self):
 		return self.name
+
+
+@receiver(models.signals.pre_delete, sender=OutfitItem)
+def outfit_item_auto_delete_file_on_delete(sender, instance, **kwargs):
+		instance.image.delete()

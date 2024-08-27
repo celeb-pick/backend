@@ -7,6 +7,7 @@ from users.serializers import OutfitPostCreatorSerializer
 from celebrities.serializers import OutfitPostCelebritySerializer
 from users.models import CustomUser
 from celebrities.models import Celebrity
+from brands.models import Brand
 
 class BaseOutfitSerializer(serializers.Serializer):
     scrap_count = serializers.SerializerMethodField()
@@ -41,7 +42,7 @@ class TinyOutfitItemSerializer(BaseOutfitSerializer, serializers.ModelSerializer
             "id",
             "name",
             "purchase_link",
-            "image_url",
+            "image",
             *BaseOutfitSerializer.Meta.fields,
             "brand",
         ]
@@ -109,7 +110,8 @@ class OutfitPostSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
 
 
 class OutfitItemSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
-    brand = OutfitItemBrandSerializer()
+    brand = OutfitItemBrandSerializer(read_only=True)
+    brand_name = serializers.CharField(max_length=20, write_only=True)
 
     class Meta:
         model = OutfitItem
@@ -118,7 +120,18 @@ class OutfitItemSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
             "category",
             "name",
             "purchase_link",
-            "image_url",
+            "image",
             *BaseOutfitSerializer.Meta.fields,
             "brand",
+
+            # write onlys
+            "brand_name",
         ]
+
+    def create(self, validated_data):
+        brand_name = validated_data.pop('brand_name')
+        brand = Brand.objects.get_or_create(name=brand_name)[0]
+
+        outfit_item = OutfitItem.objects.create(**validated_data, brand=brand)
+        
+        return outfit_item

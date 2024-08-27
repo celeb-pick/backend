@@ -29,8 +29,9 @@ class OutfitPostList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Ge
         return self.create(request, *args, **kwargs)
 
 
-class OutfitItemList(mixins.ListModelMixin, generics.GenericAPIView):
+class OutfitItemList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     serializer_class = OutfitItemSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         queryset = OutfitItem.objects.all()
@@ -46,3 +47,6 @@ class OutfitItemList(mixins.ListModelMixin, generics.GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+        
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
