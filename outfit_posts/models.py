@@ -23,7 +23,7 @@ class OutfitPost(models.Model):
 	items = models.ManyToManyField("outfit_posts.OutfitItem", through="outfit_posts.OutfitPostItems")
 	celebrity = models.ForeignKey("celebrities.Celebrity", related_name="outfit_posts", on_delete=models.CASCADE)
 	creator = models.ForeignKey("users.CustomUser", related_name="outfit_posts", on_delete=models.SET_NULL, null=True)
-	title = models.CharField(max_length=20, validators=[MinLengthValidator(4)])
+	title = models.CharField(max_length=40, validators=[MinLengthValidator(4)])
 	created_at = models.DateTimeField(auto_now_add=True)
 	gender = models.CharField(
 		max_length=10,
@@ -88,7 +88,7 @@ class OutfitItem(models.Model):
 		max_length=10,
 		choices=CATEGORY_CHOICES,
 	)
-	name = models.CharField(max_length=60)
+	name = models.CharField(max_length=40)
 	purchase_link = models.CharField(max_length=300, blank=True)
 	image = models.ImageField(
 		upload_to=generate_outfit_item_image_filename,
