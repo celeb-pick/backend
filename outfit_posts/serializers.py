@@ -41,7 +41,7 @@ class TinyOutfitItemSerializer(BaseOutfitSerializer, serializers.ModelSerializer
             "id",
             "name",
             "purchase_link",
-            "image_url",
+            "image",
             *BaseOutfitSerializer.Meta.fields,
             "brand",
         ]
@@ -118,7 +118,7 @@ class OutfitItemSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
             "category",
             "name",
             "purchase_link",
-            "image_url",
+            "image",
             *BaseOutfitSerializer.Meta.fields,
             "brand",
         ]
