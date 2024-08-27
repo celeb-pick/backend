@@ -66,13 +66,13 @@ def generate_outfit_item_image_filename(value, filename):
 
 
 class OutfitItem(models.Model):
-	TOP = "TOP"
-	BOTTOM = "BOTTOM"
-	OUTERWEAR = "OUTERWEAR"
-	SHOES = "SHOES"
-	BAG = "BAG"
-	ACCESSORY = "ACCESSORY"
-	OTHERS = "OTHERS"
+	TOP = "상의"
+	BOTTOM = "하의"
+	OUTERWEAR = "아우터"
+	SHOES = "신발"
+	BAG = "가방"
+	ACCESSORY = "악세사리"
+	OTHERS = "기타"
 	CATEGORY_CHOICES = (
 		(TOP, "상의"),
 		(BOTTOM, "하의"),
