@@ -7,7 +7,8 @@ class CelebritySerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
-            "profile_image_url",
+            "category",
+            "profile_image"
         ]
 
 

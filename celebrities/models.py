@@ -1,4 +1,13 @@
 from django.db import models
+from django.dispatch import receiver
+from django.core.validators import FileExtensionValidator
+import uuid
+import os
+
+def generate_profile_image_filename(value, filename):
+    extension = os.path.splitext(value.profile_image.name)[1]
+    return f"celebrity/{str(uuid.uuid4())}{extension}"
+
 
 class Celebrity(models.Model):
     IDOL = "아이돌"
@@ -21,7 +30,19 @@ class Celebrity(models.Model):
 		max_length=10,
 		choices=CATEGORY_CHOICES,
 	)
-    profile_image_url = models.CharField(max_length=300)
+    profile_image = models.ImageField(
+		upload_to=generate_profile_image_filename,
+		validators=[FileExtensionValidator([
+			"jpg",
+			"jpeg",
+			"jfif",
+			"png",
+			"bmp",
+			"webp",
+			"tif",
+			"tiff",
+		])]
+	)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -29,3 +50,8 @@ class Celebrity(models.Model):
 
     def __str__(self):
         return self.name
+
+
+@receiver(models.signals.pre_delete, sender=Celebrity)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+		instance.profile_image.delete()
