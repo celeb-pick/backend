@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
-from .models import OutfitPost, OutfitItem
+from .models import OutfitPost, OutfitItem, OutfitPostItems
 from brands.serializers import OutfitItemBrandSerializer
 from users.serializers import OutfitPostCreatorSerializer
 from celebrities.serializers import OutfitPostCelebritySerializer
@@ -111,6 +111,7 @@ class OutfitPostSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
 
 class OutfitItemSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
     brand = OutfitItemBrandSerializer(read_only=True)
+    related_outfit_post_count = serializers.SerializerMethodField(read_only=True)
     brand_name = serializers.CharField(max_length=20, write_only=True)
 
     class Meta:
@@ -121,12 +122,16 @@ class OutfitItemSerializer(BaseOutfitSerializer, serializers.ModelSerializer):
             "name",
             "purchase_link",
             "image",
+            "related_outfit_post_count",
             *BaseOutfitSerializer.Meta.fields,
             "brand",
 
             # write onlys
             "brand_name",
         ]
+
+    def get_related_outfit_post_count(self, obj):
+        return OutfitPostItems.objects.filter(outfit_item=obj.id).count()
 
     def create(self, validated_data):
         brand_name = validated_data.pop('brand_name')
