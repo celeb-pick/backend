@@ -18,6 +18,20 @@ class MyProfileDetail(mixins.RetrieveModelMixin, generics.GenericAPIView):
         return self.retrieve(request, *args, **kwargs)
 
 
+class MyOutfitPostList(mixins.ListModelMixin, generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = OutfitPostSerializer
+    
+    def get_queryset(self):
+        queryset = OutfitPost.objects.filter(creator=self.request.user)
+        query_params = self.request.query_params
+
+        return get_filtered_outfit_posts(queryset, query_params)
+        
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+
 class MyOutfitPostScrapList(mixins.ListModelMixin, generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = OutfitPostSerializer
