@@ -1,10 +1,22 @@
 from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import permissions
+from .serializers import MyProfileSerializer
 from outfit_posts.serializers import OutfitPostSerializer, OutfitItemSerializer
 from outfit_posts.models import OutfitPost
 from outfit_posts.filters import get_filtered_outfit_posts
 from users.models import CustomUser
+
+class MyProfileDetail(mixins.RetrieveModelMixin, generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = MyProfileSerializer
+
+    def get_object(self):
+        return self.request.user
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
 
 class MyOutfitPostScrapList(mixins.ListModelMixin, generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
