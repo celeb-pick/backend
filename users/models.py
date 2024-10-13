@@ -25,7 +25,7 @@ class CustomUser(AbstractUser):
         max_length=10,
         choices=GENDER_CHOICES,
     )
-    profile_image_url = models.CharField(max_length=300, blank=True)
+    profile_image = models.CharField(max_length=300, blank=True)
     username = None
     first_name = None
     last_name = None

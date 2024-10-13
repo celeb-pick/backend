@@ -8,7 +8,7 @@ class MyProfileSerializer(serializers.ModelSerializer):
             "email",
             "nickname",
             "gender",
-            "profile_image_url",
+            "profile_image",
         ]
 
 class OutfitPostCreatorSerializer(serializers.ModelSerializer):
@@ -16,6 +16,6 @@ class OutfitPostCreatorSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = [
             "id",
-            "profile_image_url",
+            "profile_image",
             "nickname",
         ]
